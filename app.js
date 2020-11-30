@@ -1,12 +1,17 @@
-const http = require('http')
-
+const express = require('express')
 // Routes contains everything that was put in module exports from routes.js (read only)
-const routes = require('./routes')
 
-console.log(routes.someText)
+const app = express()
 
-// Anonymous function 
-const server = http.createServer(routes.handler)
+// Add a new middleware function(s)
+app.use('/add-product', (req, res, next) => {
+  console.log('In another middleware')
+  res.send('<h1>The "Add Product" Page</h1>')
+})
 
-// Start the server
-server.listen(3000)
+app.use('/', (req, res, next) => {
+  console.log('In another middleware')
+  res.send('<h1>Hello from Express!</h1>')
+})
+
+app.listen(3000)
